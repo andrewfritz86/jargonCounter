@@ -2,16 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Jargon Counter</title>
+  <link href="./animate.css" rel="stylesheet">
+  <link href="./skeleton.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
   <style>
-
+    
+    body{
+      background-color: #ecf0f1;
+    }
     .plain {
-      color: blue;
+      color: #34495e;
     }
 
     .special {
-      color: red;
+      color: #c0392b;
+    }
+
+    .arrow{
+      width: 100%;
+    }
+
+    .yes{
+      text-align: center;
     }
 
   </style>
@@ -20,7 +33,13 @@
 <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 </head>
 <body>
-  <div id="target">
+  <div class="container">
+    <div class="two columns"> .</div>
+    <div class="eight columns yes">
+      <div id="target">
+      </div>
+    </div>
+    <div class="two columns"> .</div>
   </div>
 </body>
   <script src="./demo.js" type="text/jsx"></script>

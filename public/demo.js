@@ -8,7 +8,7 @@ var Word = React.createClass({
   },
 
   render: function(){
-    return <span className={"plain " + (this.props.matched ? "special" : "plain")}> {this.props.content} </span>
+    return <span className={"plain " + (this.props.matched ? "animated rubberBand special" : "plain")}> {this.props.content} </span>
   }
 
 });
@@ -44,21 +44,32 @@ var Tracker = React.createClass({
     "learnings",
     "disrupting",
     "iteration",
-    "stand-up"
-    ]
+    "stand-up",
+    "flow",
+    "feature",
+    "features",
+    "product",
+    "testing",
+    "mongo",
+    "firebase",
+    "MEAN",
+    "sql",
+    "nosql",
+    "cloud"
+    ];
   },
 
   getInitialState: function(){
-    return {text: "Who wants some jargon?", jargonCount: 0}
+    return {text: "Enter your Jargon!", jargonCount: 0};
   },
 
   render: function(){
     return (
-          <div> <input type="text" onChange={this.handleChange} className="form-control" value={this.state.text} /> 
-            <h1> {this.markupJargon()} </h1>
-            <h2> Current Jargon Count {this.state.jargonCount} </h2> 
+          <div><input type="text" onChange={this.handleChange} className="form-control arrow" value={this.state.text} /> 
+            <h3> {this.markupJargon()} </h3>
+            <h4> Current Jargon Count: <span className="special"> {this.state.jargonCount} </span> </h4> 
           </div> 
-          )
+          );
   },
 
   markupJargon: function(){
@@ -70,7 +81,7 @@ var Tracker = React.createClass({
     words.forEach(function(word){
       var buzzy;
         buzzwords.forEach(function(buzzword){
-        if(word === buzzword){
+        if(word.toLowerCase().replace(/[^a-zA-Z]/g, "") === buzzword){
           var newWord = <Word matched={true} content={word} />;
           arrayOfWordComponents.push(newWord);
           buzzy = true;
@@ -94,7 +105,7 @@ var Tracker = React.createClass({
 
     words.forEach(function(word){
       buzzwords.forEach(function(buzzword){
-        if(word === buzzword){
+        if(word.toLowerCase().replace(/[^a-zA-Z]/g, "") === buzzword){
           matchCount++
         }
       });

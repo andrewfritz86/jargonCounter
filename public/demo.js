@@ -1,6 +1,21 @@
 
+var Word = React.createClass({
+  getInitialState: function(){
+    return {
+      matched: false,
+      content: " "
+    }
+  },
+
+  render: function(){
+    return <span className={"plain " + (this.props.matched ? "special" : "plain")}> {this.props.content} </span>
+  }
+
+});
+
+
 var Tracker = React.createClass({
-  componentDidMount: function(){
+  componentWillMount: function(){
     this.buzzwords = [
     "disrupt",
     "dynamic",
@@ -24,21 +39,51 @@ var Tracker = React.createClass({
     "deck",
     "bleeding-edge",
     "isomorphic",
-    "javascript"
+    "javascript",
+    "bandwidth",
+    "learnings",
+    "disrupting",
+    "iteration",
+    "stand-up"
     ]
   },
 
   getInitialState: function(){
-    return {text: "type some jargon here", jargonCount: 0}
+    return {text: "Who wants some jargon?", jargonCount: 0}
   },
 
   render: function(){
     return (
           <div> <input type="text" onChange={this.handleChange} className="form-control" value={this.state.text} /> 
-            <h1 className="special">{this.state.text}</h1>
+            <h1> {this.markupJargon()} </h1>
             <h2> Current Jargon Count {this.state.jargonCount} </h2> 
           </div> 
           )
+  },
+
+  markupJargon: function(){
+
+    var arrayOfWordComponents = [];
+    var words = this.state.text.split(" ");
+    var buzzwords = this.buzzwords;
+
+    words.forEach(function(word){
+      var buzzy;
+        buzzwords.forEach(function(buzzword){
+        if(word === buzzword){
+          var newWord = <Word matched={true} content={word} />;
+          arrayOfWordComponents.push(newWord);
+          buzzy = true;
+        }
+      });
+      if(!buzzy){
+        var noMatch = <Word matched={false} content={word} />;
+        arrayOfWordComponents.push(noMatch);
+      }
+    });
+
+    return arrayOfWordComponents;
+
   },
 
   handleChange: function(event){
@@ -51,16 +96,11 @@ var Tracker = React.createClass({
       buzzwords.forEach(function(buzzword){
         if(word === buzzword){
           matchCount++
-        }else{
-
         }
-      })
+      });
     });
-    console.log(matchCount);
-    //should set state to be an arry?
     this.setState({text: event.target.value, jargonCount: matchCount});
   }
-
-})
+});
 
 React.render(<Tracker />, document.querySelector("#target"));
